@@ -13,8 +13,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../constants/enum.dart';
 import '../../../../utils/extensions/custom_extensions.dart';
+import '../../../discord_rpc/init_rpc.dart';
 import '../../../settings/presentation/reader/widgets/reader_mode_tile/reader_mode_tile.dart';
 import '../../data/manga_book_repository.dart';
+import '../../domain/chapter/chapter_model.dart';
 import '../../domain/chapter_patch/chapter_put_model.dart';
 import '../manga_details/controller/manga_details_controller.dart';
 import 'controller/reader_controller.dart';
@@ -89,11 +91,18 @@ class ReaderScreen extends HookConsumerWidget {
     );
 
     useEffect(() {
+      int currentChapter = chapterIndex;
+      String mangaName = manga.valueOrNull?.title ?? '';
+      int totalChapters = manga.valueOrNull?.chapterCount ?? 0;
+      UpdateRPCstatus updateRPCstatus = UpdateRPCstatus();
+      updateRPCstatus.updateRPC(mangaName, 'Chapter $currentChapter of $totalChapters');
+
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
       return () => SystemChrome.setEnabledSystemUIMode(
             SystemUiMode.manual,
             overlays: SystemUiOverlay.values,
           );
+
     }, []);
 
     return PopScope(

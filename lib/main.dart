@@ -6,6 +6,7 @@
 
 import 'dart:io';
 
+import 'package:discord_rpc/discord_rpc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,6 +18,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'src/features/about/presentation/about/controllers/about_controller.dart';
+import 'src/features/discord_rpc/init_rpc.dart';
 import 'src/global_providers/global_providers.dart';
 import 'src/sorayomi.dart';
 
@@ -48,6 +50,8 @@ Future<void> main() async {
 
   SystemChrome.setPreferredOrientations(DeviceOrientation.values);
   GoRouter.optionURLReflectsImperativeAPIs = true;
+
+  UpdateRPCstatus().main();
 
   runApp(
     ProviderScope(
